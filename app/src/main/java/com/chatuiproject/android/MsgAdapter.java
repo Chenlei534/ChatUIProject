@@ -18,7 +18,6 @@ import java.util.List;
 
 public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
     private List<Msg> mMsgList; //消息列表
-    private Msg msg;    //消息对象
     /**
      * 构造函数，得到传入消息列表
      * @param msgList 消息列表
@@ -34,9 +33,9 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
      * @return ViewHolder实例
      */
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
         //创建viewHolder对象
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
         //通过LayoutInflater创建布局，并初始化viewHolder
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.msg_item,parent,false);
         viewHolder=new ViewHolder(view);
@@ -44,12 +43,16 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
         viewHolder.leftMsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int position=viewHolder.getAdapterPosition();
+                Msg msg=mMsgList.get(position);
                 Toast.makeText(view.getContext(),msg.getContent(),Toast.LENGTH_SHORT).show();
             }
         });
         viewHolder.rightMsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int position=viewHolder.getAdapterPosition();
+                Msg msg=mMsgList.get(position);
                 Toast.makeText(view.getContext(),msg.getContent(),Toast.LENGTH_SHORT).show();
             }
         });
@@ -65,7 +68,7 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        msg=mMsgList.get(position); //得到当前子项的消息
+        Msg msg=mMsgList.get(position); //得到当前子项的消息
         //如果是收到的消息
         if(msg.getType()==Msg.TYPE_RECEIVED){
             //显示左边消息布局，将右边消息布局隐蔽
