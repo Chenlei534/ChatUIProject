@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ChatUIProject</string>
+    <string name="right_send">右发送</string>
+    <string name="left_send">左发送</string>
 </resources>
